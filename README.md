@@ -6,5 +6,6 @@
  1)Generaing possible urls:
  Form a few combinations of names from given company name and append some common domain name extensions. Check whether the url formed is a valid one.
  
- 2)Parsing url to get rediction score
- Parse the web page to get title. Check if the company name is present and if not do a similarity check to get a prediction score.
+ 2)Parsing url to get prediction score:
+ Parse the web page to get title. Check if the company name is present and if not do a similarity check to get a prediction score. Sort and output the url with the highest score.
+ 
