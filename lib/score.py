@@ -27,6 +27,7 @@ class Score:
     def get_content(self):
         try:
             html = requests.get(self.url)
+            self.url = html.url
             soup = BeautifulSoup(html.content, 'html.parser')
             return soup
         except Exception:

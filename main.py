@@ -7,5 +7,5 @@ if __name__ == '__main__':
             break
         prediction = Generate(inp_brand)
         score, url = prediction.get()
-        print "domain",url
-        print "prediction score",score
+        print "domain: ",url
+        print "prediction score: ",score

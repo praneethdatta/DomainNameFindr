@@ -3,7 +3,7 @@ import socket
 
 from lib.score import Score
 from nltk.stem import PorterStemmer
-from joblib import Parallel, delayed, cpu_count
+from joblib import Parallel, delayed
 
 PS = PorterStemmer()
 STOPWORDS = {'ourselves', 'hers', 'between', 'yourself', 'but', 'again', 'there', 'about', 'once', 'during', 'out', 'very', 'having', 'with', 'they', 'own', 'an', 'be', 'some', 'for', 'do', 'its', 'yours', 'such', 'into', 'of', 'most', 'itself', 'other', 'off', 'is', 's', 'am', 'or', 'who', 'as', 'from', 'him', 'each', 'the', 'themselves', 'until', 'below', 'are', 'we', 'these', 'your', 'his', 'through', 'don', 'nor', 'me', 'were', 'her', 'more', 'himself', 'this', 'down', 'should', 'our', 'their', 'while', 'above', 'both', 'up', 'to', 'ours', 'had', 'she', 'all', 'no', 'when', 'at', 'any', 'before', 'them', 'same', 'and', 'been', 'have', 'in', 'will', 'on', 'does', 'yourselves', 'then', 'that', 'because', 'what', 'over', 'why', 'so', 'can', 'did', 'not', 'now', 'under', 'he', 'you', 'herself', 'has', 'just', 'where', 'too', 'only', 'myself', 'which', 'those', 'i', 'after', 'few', 'whom', 't', 'being', 'if', 'theirs', 'my', 'against', 'a', 'by', 'doing', 'it', 'how', 'further', 'was', 'here', 'than'}
@@ -57,7 +57,7 @@ class Generate():
         names_list.append(''.join(names[0:n-1]))
         for i in range(1,n-1):
             s = ''.join(names[0:i]) + ''.join(names[i+1:n])
-            names_list.append()
+            names_list.append(s)
         return names_list
 
     def comb_names(self):
@@ -85,7 +85,8 @@ class Generate():
         scores = {}
         #print('valid urls', valid_urls)
         n_jobs = len(valid_urls)
-        scores = Parallel(n_jobs = n_jobs)\
+        if not n_jobs: return (0,"No possible url")
+        scores = Parallel(n_jobs = n_jobs, verbose = 5)\
                         (delayed(Score(url, self.name, STOPWORDS).get_score)() for url in valid_urls)
         scores.sort(key = operator.itemgetter(0), reverse = True)
         #print scores
