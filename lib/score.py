@@ -20,8 +20,6 @@ class Score:
     def check_name(self, content):
         if not content: return 0
         for text in content.stripped_strings:
-            if self.url == 'http://atom.org':
-                print text
             if self.name in text.lower():
                 return 1
         return 0

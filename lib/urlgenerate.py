@@ -25,8 +25,7 @@ class Generate():
         for url in urls:
             try:
                 socket.gethostbyname(url)
-            except Exception as e:
-                print e
+            except Exception :
                 continue
             valid_urls.append(HTTP + url)
         return valid_urls
@@ -84,12 +83,12 @@ class Generate():
 
     def get_predicted_url(self, valid_urls):
         scores = {}
-        print('valid urls', valid_urls)
+        #print('valid urls', valid_urls)
         n_jobs = len(valid_urls)
-        scores = Parallel(n_jobs = n_jobs, verbose = 10)\
+        scores = Parallel(n_jobs = n_jobs)\
                         (delayed(Score(url, self.name, STOPWORDS).get_score)() for url in valid_urls)
         scores.sort(key = operator.itemgetter(0), reverse = True)
-        print scores
+        #print scores
         return scores[0]
 
     def get(self):

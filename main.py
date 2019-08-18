@@ -6,6 +6,6 @@ if __name__ == '__main__':
         if inp_brand == 'quit':
             break
         prediction = Generate(inp_brand)
-        url, score = prediction.get()
-        print url
-        print score
+        score, url = prediction.get()
+        print "domain",url
+        print "prediction score",score
